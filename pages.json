@@ -20,10 +20,18 @@
       "enablePullDownRefresh": true
     }
   }],
+  "subPackages": [{
+    "root": "subpkg",
+    "pages": [
+      {
+        "path": "goods_detail/goods_detail",
+        "style": {}
+      }
+    ]
+  }],
   "tabBar": {
     "selectedColor": "#C00000",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/home/home",
         "text": "首页",
         "iconPath": "static/tab_icons/home.png",
