@@ -22,12 +22,13 @@
   }],
   "subPackages": [{
     "root": "subpkg",
-    "pages": [
-      {
-        "path": "goods_detail/goods_detail",
-        "style": {}
-      }
-    ]
+    "pages": [{
+      "path": "goods_detail/goods_detail",
+      "style": {}
+    }, {
+      "path": "goods_list/goods_list",
+      "style": {}
+    }]
   }],
   "tabBar": {
     "selectedColor": "#C00000",
