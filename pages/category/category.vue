@@ -1,29 +1,34 @@
 <template>
-  <view class="scroll-view-container">
-    <!-- 左侧滚动视图区域 -->
-    <scroll-view class="left-scroll-view" scroll-y="true" :style="{height: windowHeight + 'px'}">
-      <!-- 一级分类 -->
-      <view :class="['left-scroll-view-item', active === index ? 'active' : '']" v-for="(category,index) in categoryList" :key="category.cate_id" @click="changeCategory(index)">
-        {{ category.cat_name }}
-      </view>
-    </scroll-view>
-    
-    <!-- 右侧滚动视图区域 -->
-    <scroll-view class="right-scroll-view" :style="{height: windowHeight + 'px'}" scroll-y="true" :scroll-top="scrollTop">
-      <!-- 二级分类 -->
-      <view class="category-level2" v-for="(category2,i2) in categoryLevel2" :key="i2">
-        <view class="category-level2-title">
-          /{{ category2.cat_name }}/
+  <view>
+    <!-- 搜索组件 -->
+    <search></search>
+    <!-- 商品展示区域 -->
+    <view class="scroll-view-container">
+      <!-- 左侧滚动视图区域 -->
+      <scroll-view class="left-scroll-view" scroll-y="true" :style="{height: windowHeight + 'px'}">
+        <!-- 一级分类 -->
+        <view :class="['left-scroll-view-item', active === index ? 'active' : '']" v-for="(category,index) in categoryList" :key="category.cate_id" @click="changeCategory(index)">
+          {{ category.cat_name }}
         </view>
-        <!-- 三级分类 -->
-        <view class="category-level3-list">
-          <view class="category-level3-item" v-for="(category3,i3) in category2.children" :key="i3" @click="goToGoodsList(category3)">
-            <image class="category-level3-img" :src="category3.cat_icon.replace('dev', 'web')"></image>
-            <text class="category-level3-txt">{{ category3.cat_name }}</text>
+      </scroll-view>
+      
+      <!-- 右侧滚动视图区域 -->
+      <scroll-view class="right-scroll-view" :style="{height: windowHeight + 'px'}" scroll-y="true" :scroll-top="scrollTop">
+        <!-- 二级分类 -->
+        <view class="category-level2" v-for="(category2,i2) in categoryLevel2" :key="i2">
+          <view class="category-level2-title">
+            /{{ category2.cat_name }}/
+          </view>
+          <!-- 三级分类 -->
+          <view class="category-level3-list">
+            <view class="category-level3-item" v-for="(category3,i3) in category2.children" :key="i3" @click="goToGoodsList(category3)">
+              <image class="category-level3-img" :src="category3.cat_icon.replace('dev', 'web')"></image>
+              <text class="category-level3-txt">{{ category3.cat_name }}</text>
+            </view>
           </view>
         </view>
-      </view>
-    </scroll-view>
+      </scroll-view>
+    </view>
   </view>
 </template>
 
@@ -32,7 +37,7 @@
     data() {
       return {
         // 窗口可用高度 = 屏幕高度 - navigationBar高度 - tabbar高度
-        windowHeight: uni.getSystemInfoSync().windowHeight,
+        windowHeight: uni.getSystemInfoSync().windowHeight - 60,
         // 一级分类数据
         categoryList: [],
         // 二级分类数据

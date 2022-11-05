@@ -1,5 +1,9 @@
 <template>
   <view>
+    <view class="search-box">
+      <search></search>
+    </view>
+    
     <!-- 轮播图区域 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item v-for="(swiper, index) in swiperList" :key="swiper.goods_id">
@@ -101,6 +105,12 @@
 </script>
 
 <style lang="less">
+  // 搜索框
+  .search-box {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
   // 轮播图
   swiper {
     height: 330rpx;

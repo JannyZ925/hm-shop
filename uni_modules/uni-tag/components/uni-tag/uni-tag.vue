@@ -132,6 +132,8 @@
 		/* #ifdef H5 */
 		cursor: pointer;
 		/* #endif */
+    // 自己写的样式
+    margin-right: 10rpx;
 
 		// size attr
 		&--default {
