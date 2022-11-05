@@ -7,13 +7,13 @@
     </view>
     
     <!-- 搜索历史 -->
-    <view class="search-history-container" v-show="keyword === ''">
+    <view class="search-history-container" v-show="keyword === '' && searchHistory.length !== 0">
       <view class="search-history-title">
         <text>搜索历史</text>
-        <uni-icons type="trash" size="26" @click="cleanSearchHistory"></uni-icons>
+        <uni-icons type="trash" size="26" @click="clickCleanIconHandler"></uni-icons>
       </view>
       <view class="search-history-list">
-        <uni-tag v-for="(history, index) in histories" :circle="true" :text="history" type="default" @click="goToGoodsList(history)" />
+        <uni-tag v-for="(history, index) in histories" circle="true" :text="history" type="default" size="default" inverted="true" @click="goToGoodsList(history)" />
       </view>
     </view>
     
@@ -41,6 +41,7 @@
         searchHistory: []
       };
     },
+    
     computed: {
       // this.searchHistory.reverse() 反转搜索历史数组,最后搜索的排在最前面
       /**
@@ -52,6 +53,7 @@
         return [...new Set(this.searchHistory.reverse())]
       }
     },
+    
     methods: {
       // 搜索框输入事件
       input(e) {
@@ -77,7 +79,6 @@
       goToDetail(goods_id) {
         // 将搜索关键词加入到搜索历史记录中
         this.searchHistory.push(this.keyword)
-        console.log(this.searchHistory);
         // 将搜索历史保存到本地
         uni.setStorageSync('searchHistory', JSON.stringify(this.searchHistory))
         // 跳转
@@ -94,18 +95,26 @@
         })
       },
       
-      // 清空搜索历史
-      cleanSearchHistory() {
-        // 将data中的搜索记录清空
-        this.searchHistory = []
-        // 将本地的搜索记录清空
-        uni.setStorageSync('searchHistory', [])
+      // 点清空按钮事件
+      clickCleanIconHandler() {
+        uni.showModal({
+          content: '确认删除全部搜索历史？',
+          success: (res) => {
+            if(res.confirm) {
+              // 将data中的搜索记录清空
+              this.searchHistory = []
+              // 将本地的搜索记录清空
+              uni.setStorageSync('searchHistory', [])
+            }
+          }
+        })
       }
     },
     
-    mounted() {
+    onLoad() {
       // 从本地获取搜索历史
-      this.searchHistory = JSON.parse(uni.getStorageSync('searchHistory')) || []
+      this.searchHistory = JSON.parse(uni.getStorageSync('searchHistory') || '[]')
+      console.log(this.searchHistory);
     }
   }
 </script>

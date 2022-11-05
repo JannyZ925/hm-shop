@@ -9,7 +9,8 @@ $http.baseUrl = "https://www.uinav.com"
 // 请求开始前做一些事情(options表示请求的一些配置)
 $http.beforeRequest = function(options){
   uni.showLoading({
-    title: "玩命加载中..."
+    title: "玩命加载中...",
+    mask: true
   })
 }
 // 请求结束后做一些事情
