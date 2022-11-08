@@ -30,7 +30,7 @@
       "style": {
         "onReachBottomDistance": 150,
         "enablePullDownRefresh": true,
-        "backgroundColor": "F8F8F8"
+        "backgroundColor": "#F8F8F8"
       }
     }, {
       "path": "search/search",

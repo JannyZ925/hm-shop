@@ -72,7 +72,7 @@
         })
       }
     },
-    mounted(){
+    onLoad(){
       this.getCategoryList()
     }
   }

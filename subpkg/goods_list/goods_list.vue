@@ -50,8 +50,9 @@
       async getGoodsList(callback) {
         const { data: res } = await uni.$http.get('/api/public/v1/goods/search', this.queryObj)
         if(res.meta.status !== 200) return uni.$showMsg()
-        // 数据请求完毕后调用回调函数
+        // 数据请求完毕后，如果传了回调函数就调用
         callback && callback()
+        // 合并已有的商品和新获取的商品
         this.goodsList = [...this.goodsList, ...res.message.goods]
         this.total = res.message.total
       },
@@ -66,9 +67,11 @@
     
     // 监听用户上拉触底事件
     onReachBottom() {
+      // 判断是否所有数据都请求完毕
       if(this.queryObj.pagenum * this.queryObj.pagesize >= this.total) {
         return uni.$showMsg('没有数据了哦')
       }
+      // 页数增加1
       this.queryObj.pagenum += 1
       this.getGoodsList()
     },

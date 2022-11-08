@@ -7,15 +7,16 @@
     </view>
     
     <!-- 搜索历史 -->
-    <view class="search-history-container" v-show="keyword === '' && searchHistory.length !== 0">
-      <view class="search-history-title">
-        <text>搜索历史</text>
-        <uni-icons type="trash" size="26" @click="clickCleanIconHandler"></uni-icons>
+      <view class="search-history-container" v-if="searchHistory.length !== 0 && keyword === ''">
+        <view class="search-history-title">
+          <text>搜索历史</text>
+          <uni-icons type="trash" size="26" @click="clickCleanIconHandler"></uni-icons>
+        </view>
+        <view class="search-history-list">
+          <uni-tag v-for="(history, index) in histories" circle="true" :text="history" type="default" size="default" inverted="true" @click="goToGoodsList(history)" />
+        </view>
       </view>
-      <view class="search-history-list">
-        <uni-tag v-for="(history, index) in histories" circle="true" :text="history" type="default" size="default" inverted="true" @click="goToGoodsList(history)" />
-      </view>
-    </view>
+    </block>
     
     <!-- 搜索结果 -->
     <scroll-view class="search-results-container">
@@ -50,7 +51,7 @@
        * ...将Set转换为Array
        */
       histories() {
-        return [...new Set(this.searchHistory.reverse())]
+        return [...new Set([...this.searchHistory].reverse())]
       }
     },
     
@@ -114,7 +115,6 @@
     onLoad() {
       // 从本地获取搜索历史
       this.searchHistory = JSON.parse(uni.getStorageSync('searchHistory') || '[]')
-      console.log(this.searchHistory);
     }
   }
 </script>
