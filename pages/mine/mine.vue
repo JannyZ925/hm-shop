@@ -5,12 +5,15 @@
 </template>
 
 <script>
+  import mixin from '../../mixins'
   export default {
     data() {
       return {
         
       };
-    }
+    },
+    
+    mixins: [mixin]
   }
 </script>
 

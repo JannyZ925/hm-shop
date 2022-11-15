@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@dcloudio/uni-helper-json": "^1.0.13",
-    "@escook/request-miniprogram": "^0.2.1"
+    "@escook/request-miniprogram": "^0.2.1",
+    "vuex": "^4.1.0"
   }
 }

@@ -51,6 +51,8 @@
 
 <script>
   import { $http } from '@escook/request-miniprogram';
+  import mixin from '../../mixins'
+  
   export default {
     data() {
       return {
@@ -62,6 +64,7 @@
         floorList: []
       };
     },
+    
     methods: {
       // 获取轮播图数据
       async getSwiperList() {
@@ -96,11 +99,14 @@
         this.floorList = res.message
       }
     },
+    
     onLoad() {
       this.getSwiperList()
       this.getNavList()
       this.getFloorList()
-    }
+    },
+    
+    mixins: [mixin]
   }
 </script>
 

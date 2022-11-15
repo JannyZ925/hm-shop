@@ -33,6 +33,10 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+import { mapState } from 'vuex';
+import mixin from '../../mixins'
+
   export default {
     data() {
       return {
@@ -42,11 +46,11 @@
         options: [{
           icon: 'shop',
           text: '店铺',
-          info: 2,
+          info: 0
         }, {
           icon: 'cart',
           text: '购物车',
-          info: 2
+          info: 0
         }],
         buttonGroup: [{
           text: '加入购物车',
@@ -60,8 +64,25 @@
         ]
       };
     },
-
+    
+    computed: {
+      ...mapState('cart', ['cart'])
+    },
+    
+    watch: {
+      // 监听totalCount的变化,为商品详情页的购物车角标数字赋值
+      totalCount: {
+        immediate: true,
+        handler(newVal) {
+          const op = this.options.find(op => op.text === '购物车')
+          op.info = newVal
+        }
+      }
+    },
+    
     methods: {
+      ...mapMutations('cart', {addToCart: 'ADDTOCART'}),
+      
       // 获取商品详情
       async getGoodsDetail(goods_id) {
         const { data: res } = await uni.$http.get('/api/public/v1/goods/detail?goods_id=' + goods_id)
@@ -73,6 +94,7 @@
         res.message.goods_introduce = res.message.goods_introduce.replace(/<img /g, '<img style="vertical-align: bottom;" ').replace(/webp/g, 'jpg')
         this.goodsDetail = res.message
       },
+      
       // 预览图片
       previewImage(index) {
         uni.previewImage({
@@ -81,6 +103,7 @@
           urls: this.goodsDetail.pics.map(x => x.pics_big)
         })
       },
+      
       // 点击底部的左侧按钮事件
       onClick(e) {
         if(e.content.text === '购物车') {
@@ -88,12 +111,37 @@
             url: '/pages/cart/cart'
           })
         }
+      },
+      
+      // 点击底部右侧的按钮事件
+      buttonClick(e) {
+        if(e.content.text === '加入购物车') {
+          // 封装商品信息对象
+          const goods = {
+            goods_id: this.goodsDetail.goods_id,
+            goods_name: this.goodsDetail.goods_name,
+            goods_price: this.goodsDetail.goods_price,
+            goods_count: 1,
+            goods_small_logo: this.goodsDetail.goods_small_logo,
+            goods_state: true //商品的勾选状态
+          }
+          // 将商品加入购物车
+          this.addToCart(goods)
+          // 弹出提示框
+          uni.showToast({
+            title: '添加成功！在购物车等亲~',
+            icon: 'success',
+            duration: 1500
+          })
+        }
       }
     },
 
     onLoad(options) {
       this.getGoodsDetail(options.goods_id)
-    }
+    },
+    
+    mixins: [mixin]
   }
 </script>
 

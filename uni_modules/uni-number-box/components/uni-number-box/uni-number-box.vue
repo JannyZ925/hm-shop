@@ -165,6 +165,7 @@
 		display: flex;
 		/* #endif */
 		flex-direction: row;
+    border: 1px lightgray solid
 	}
 
 	.uni-numbox-btns {

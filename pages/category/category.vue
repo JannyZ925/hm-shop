@@ -33,6 +33,7 @@
 </template>
 
 <script>
+  import mixin from '../../mixins'
   export default {
     data() {
       return {
@@ -48,6 +49,7 @@
         scrollTop: 0
       };
     },
+    
     methods: {
       // 获取分类数据
       async getCategoryList(){
@@ -72,9 +74,12 @@
         })
       }
     },
+    
     onLoad(){
       this.getCategoryList()
-    }
+    },
+    
+    mixins: [mixin]
   }
 </script>
 

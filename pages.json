@@ -2,17 +2,17 @@
   "pages": [{
     "path": "pages/home/home",
     "style": {
-      "enablePullDownRefresh": true
+      "enablePullDownRefresh": false
     }
   }, {
     "path": "pages/category/category",
     "style": {
-      "enablePullDownRefresh": true
+      "enablePullDownRefresh": false
     }
   }, {
     "path": "pages/cart/cart",
     "style": {
-      "enablePullDownRefresh": true
+      "enablePullDownRefresh": false
     }
   }, {
     "path": "pages/mine/mine",
