@@ -8,8 +8,23 @@ export default {
   },
   
   getters: {
-    totalCount(state){
+    // 购物车中商品总数
+    totalCount(state) {
       return state.cart.length
+    },
+    // 已勾选的商品数量
+    checkedCount(state) {
+      return state.cart.reduce((totalCount, item) => {
+        if(item.goods_state) totalCount += 1
+        return totalCount
+      }, 0)
+    },
+    // 勾选的商品总价格
+    totalPrice(state) {
+      return state.cart.reduce((totalPrice, item) => {
+        if(item.goods_state) totalPrice += (item.goods_price * item.goods_count)
+        return totalPrice
+      }, 0)
     }
   },
 
@@ -58,6 +73,12 @@ export default {
       state.cart = state.cart.filter(g => g.goods_id !== goods.goods_id)
       // 更新本地数据
       uni.setStorageSync('cart', JSON.stringify(state.cart))
-    }
+    },
+    
+    // 修改所有商品的选中状态
+    CHANGEALLGOODSSTATE(state, newVal) {
+      state.cart.forEach(goods => goods.goods_state = newVal)
+      uni.setStorageSync('cart', JSON.stringify(state.cart))
+    } 
   }
 }

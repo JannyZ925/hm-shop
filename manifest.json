@@ -66,6 +66,12 @@
           "key": "4RVBZ-62H3R-UYXWQ-WQDVU-KGETK-AUBOG"
         }
       }
-    }
+    },
+    "devServer": {
+      "port": 8080
+    },
+    "requiredPrivateInfos": [
+      "chooseAddress"
+    ]
   }
 }

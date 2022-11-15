@@ -2,13 +2,8 @@
   <view>
     <!-- 选择收货地址按钮区域，address为空时显示 -->
     <view v-if="JSON.stringify(address)==='{}'" class="choose-address-container">
-      <button 
-        type="primary"
-        size="mini" 
-        style="background-color: #AA0000;"
-        @click="chooseLocation"
-      >
-      请选择收货地址+
+      <button type="primary" size="mini" style="background-color: #AA0000;" @click="chooseAddress">
+        请选择收货地址+
       </button>
     </view>
 
@@ -17,8 +12,8 @@
       <!-- 地址信息 -->
       <view class="address-info">
         <text class="user-name">收货人：{{ address.userName }}</text>
-        <text class="user-phone">电话：{{ address.userPhone }}</text>
-        <text class="user-address">收货地址：{{ address.userAddress }}</text>
+        <text class="user-phone">电话：{{ address.telNumber }}</text>
+        <text class="user-address">收货地址：{{ addstr }}</text>
       </view>
       <!-- 展开图标 -->
       <uni-icons type="forward" size="30"></uni-icons>
@@ -45,29 +40,30 @@
     computed: {},
     methods: {
       // 选择收货地址
-      chooseLocation() {
-        uni.chooseLocation({
-          success: (res) => {
-            console.log(res.name);
-            console.log(res.address);
-          }
-        })
+      async chooseAddress() {
+        // 1. 调用小程序提供的 chooseAddress() 方法，即可使用选择收货地址的功能
+        //    返回值是一个数组：第 1 项为错误对象；第 2 项为成功之后的收货地址对象
+        const [err, succ] = await uni.chooseAddress().catch(err => err)
+        console.log('222');
+
+        // 2. 用户成功的选择了收货地址
+        if (err === null && succ.errMsg === 'chooseAddress:ok') {
+          console.log('333');
+          // 为 data 里面的收货地址对象赋值
+          this.address = succ
+        }
       }
     },
-    watch: {},
 
-    // 组件周期函数--监听组件挂载完毕
-    mounted() {},
-    // 组件周期函数--监听组件数据更新之前
-    beforeUpdate() {},
-    // 组件周期函数--监听组件数据更新之后
-    updated() {},
-    // 组件周期函数--监听组件激活(显示)
-    activated() {},
-    // 组件周期函数--监听组件停用(隐藏)
-    deactivated() {},
-    // 组件周期函数--监听组件销毁之前
-    beforeDestroy() {}
+    computed: {
+      // 收货详细地址的计算属性
+      addstr() {
+        if (!this.address.provinceName) return ''
+
+        // 拼接 省，市，区，详细地址 的字符串并返回给用户
+        return this.address.provinceName + this.address.cityName + this.address.countyName + this.address.detailInfo
+      }
+    },
   }
 </script>
 

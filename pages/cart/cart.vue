@@ -1,9 +1,9 @@
 <template>
   <view>
-    <shipping-address></shipping-address>
-    
     <!-- 购物车 -->
-    <view class="cart-container">
+    <view class="cart-container" v-if="cart.length!==0">
+      <!-- 收货地址区域 -->
+      <shipping-address></shipping-address>
       <!-- 标题 -->
       <view class="title">
         <uni-icons type="shop" size="30"></uni-icons>
@@ -19,11 +19,21 @@
           </uni-swipe-action-item>
         </block>
       </uni-swipe-action>
+      
+      <!-- 结算区域 -->
+      <settle></settle>
+    </view>
+    
+    <!-- 购物车为空时显示的区域 -->
+    <view class="empty-cart" v-else>
+      <image src="/static/empty_cart.png" class="empty-img"></image>
+      <text>购物车空空如也~</text>
     </view>
   </view>
 </template>
 
 <script>
+  import { mapGetters } from "vuex";
   import { mapMutations, mapState } from "vuex";
   import mixin from "../../mixins";
 
@@ -40,9 +50,9 @@
     },
 
     computed: {
-      ...mapState("cart", ["cart"]),
+      ...mapState("cart", ["cart"])
     },
-
+    
     methods: {
       ...mapMutations('cart', {deleteGoods: "DELETEGOODS"}),
 
@@ -68,6 +78,8 @@
 
 <style lang="less">
   .cart-container {
+    padding-bottom: 100rpx;
+    
     .title {
       height: 80rpx;
       display: flex;
@@ -84,6 +96,21 @@
     .goods-list {
       display: flex;
       flex-direction: column;
+    }
+  }
+  
+  .empty-cart {
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 300rpx;
+    
+    .empty-img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 30rpx;
     }
   }
 </style>
