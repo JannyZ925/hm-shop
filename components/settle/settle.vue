@@ -29,7 +29,7 @@ import { mapGetters } from "vuex";
     },
     
     computed: {
-      ...mapGetters("cart", ['checkedCount', "totalCount", 'totalPrice']),
+      ...mapGetters("cart", ['checkedCount', 'totalCount', 'totalPrice']),
       
       // 全选按钮选中状态
       isAllChecked() {
