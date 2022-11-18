@@ -42,7 +42,7 @@ import { mapMutations } from 'vuex'
     },
     
     computed: {
-      ...mapState("user", ['address']),
+      ...mapState("user", ['address', 'redirectInfo']),
       ...mapGetters("user", ['addressStr'])
     },
     

@@ -14,7 +14,7 @@
       <uni-swipe-action>
         <block class="goods-list" v-for="(goods, index) in cart" :key="index">
           <!-- 商品项 -->
-          <uni-swipe-action-item :right-options="options" @click="clickSwipeActionHandler($event, goods)">
+          <uni-swipe-action-item :right-options="options" :autoClose="false" @click="clickSwipeActionHandler($event, goods)">
             <goods-item :goods="goods" :isCart="true"></goods-item>
           </uni-swipe-action-item>
         </block>
